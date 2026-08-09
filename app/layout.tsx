@@ -25,8 +25,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex">
-        <aside className="w-1/5"><Sidebar/></aside>
-        <main className="grow">
+        <aside className="max-h-screen-10vh w-1/5 m-4 -my-5 mt-2.5 rounded-2xl bg-gray-600"><Sidebar/></aside>
+        <main className="max-h-screen mx-2 overflow-y-scroll grow">
         <div>Search comp</div>
         {children}
         </main>
