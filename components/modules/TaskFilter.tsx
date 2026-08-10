@@ -33,32 +33,32 @@ const TaskFilter = ({ data }: { data: Todo[] }) => {
   return (
     <div>
       <button
-        className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer"
+        className="px-4 py-2 border-b-emerald-500 border rounded-2xl m-2 cursor-pointer"
         onClick={() => setFilter("all")}
       >
         All
       </button>
       <button
-        className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer"
+        className="px-4 py-2 border-b-emerald-500 border rounded-2xl m-2 cursor-pointer"
         onClick={() => setFilter("completed")}
       >
         Completed
       </button>
       <button
-        className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer"
+        className="px-4 py-2 border-b-emerald-500 border rounded-2xl m-2 cursor-pointer"
         onClick={() => setFilter("not-completed")}
       >
         Not Completed
       </button>
       <button
-        className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer"
+        className="px-4 py-2 border-b-emerald-500 border rounded-2xl m-2 cursor-pointer"
         onClick={() => setFilter("favorites")}
       >
         Favorites
       </button>
 
       <div className="mt-4">
-         <Link href={"/task/new"} className="border-1 border-indigo-700 rounded-2xl text-indigo-300 px-3.5 py-2 ">
+         <Link href={"/task/new"} className="border border-indigo-700 rounded-2xl text-indigo-300 px-3.5 py-2 ">
        New Task 
       </Link>
         {visibleData.map((item) => (

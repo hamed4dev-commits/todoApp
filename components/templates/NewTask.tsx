@@ -39,7 +39,7 @@ const NewTask = () => {
             value={form.title}
             onChange={changeHandler}
             placeholder="Enter Title"
-            className="border-sky-400 border-1 rounded-2xl  placeholder-gray-400 text-white  bg-gray-700 px-3 py-0.5 "
+            className="border-sky-400 border rounded-2xl  placeholder-gray-400 text-white  bg-gray-700 px-3 py-0.5 "
           />
         </div>
         <div className="flex flex-col max-w-1/2 gap-2">
@@ -51,7 +51,7 @@ const NewTask = () => {
             value={form.description}
             onChange={changeHandler}
             placeholder="Enter Description"
-            className="border-sky-400 border-1 rounded-2xl  placeholder-gray-400 text-white  bg-gray-700 px-3 py-0.5 "
+            className="border-sky-400 border rounded-2xl  placeholder-gray-400 text-white  bg-gray-700 px-3 py-0.5 "
           />
         </div>
         <button type="submit" className="bg-sky-400 w-fit px-5 py-1 rounded-xl">send</button>

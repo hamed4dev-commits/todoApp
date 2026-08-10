@@ -20,7 +20,7 @@ const TaskItem = ({ item }: { item: Todo }) => {
         {item.completed ? "Completed" : "pending"}
       </span>
       <button
-        className={`px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer ${isFavorite(item.id) ? "text-red-500" : "text-gray-500"}`}
+        className={`px-4 py-2 border-b-emerald-500 border rounded-2xl m-2 cursor-pointer ${isFavorite(item.id) ? "text-red-500" : "text-gray-500"}`}
         onClick={() =>
           isFavorite(item.id) ? removeFavorite(item.id) : addFavorite(item.id)
         }
