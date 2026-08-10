@@ -1,19 +1,11 @@
-// export default async function Page({
-//   params
-// }: {
-//   params: Promise<{ param: string }>;
-// }) {
-//   const { param } = await params;
-//   console.log(param)
-//   return (
-//     <div>Task Details</div>
-//   );
-// }
 
+type Props = {
+  id: string;
+}
 
-const TaskDetails = () => {
+const TaskDetails = ({id} : Props) => {
   return (
-    <div>TaskDetails</div>
+    <div>TaskDetails for ID: {id}</div>
   )
 }
 
