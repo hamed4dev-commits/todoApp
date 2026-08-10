@@ -3,6 +3,7 @@
 import { useState } from "react";
 import TaskItem from "./TaskItem";
 import { useTaskStore } from "@/stores/taskStores";
+import Link from "next/link";
 
 type Todo = {
   id: number;
@@ -57,6 +58,9 @@ const TaskFilter = ({ data }: { data: Todo[] }) => {
       </button>
 
       <div className="mt-4">
+         <Link href={"/task/new"} className="border-1 border-indigo-700 rounded-2xl text-indigo-300 px-3.5 py-2 ">
+       New Task 
+      </Link>
         {visibleData.map((item) => (
           <TaskItem item={item} key={item.id} />
         ))}

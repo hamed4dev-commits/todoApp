@@ -1,6 +1,8 @@
 
+
 import TaskFilter from "../modules/TaskFilter";
 import TaskItem from "../modules/TaskItem";
+import NewTask from "../templates/NewTask";
 
 type Todo = {
   id: number;
