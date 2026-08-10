@@ -1,8 +1,11 @@
-import Link from "next/link";
+
+import TaskFilter from "../modules/TaskFilter";
+import TaskItem from "../modules/TaskItem";
 
 type Todo = {
   id: number;
   title: string;
+  completed: boolean;
 };
 
 const TasksPage = async () => {
@@ -10,15 +13,16 @@ const TasksPage = async () => {
     cache: "no-store",
   });
   const data: Todo[] = await res.json();
+  // console.log(data)
 
   return (
     <div>
-      {data.length > 0 &&
+      <TaskFilter data={data} />
+      {/* {data.length > 0 &&
         data.map((item) => (
-          <p key={item.id}>
-            <Link href={`/task/${item.id}`} >{item.title}</Link>
-          </p>
-        ))}
+          <TaskItem item={item} key={item.id} />
+        
+        ))} */}
     </div>
   );
 };
