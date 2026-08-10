@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import {  useState } from "react";
+import { useState } from "react";
 import TaskItem from "./TaskItem";
+import { useTaskStore } from "@/stores/taskStores";
 
 type Todo = {
   id: number;
@@ -9,30 +10,60 @@ type Todo = {
   completed: boolean;
 };
 
+type FilterType = "all" | "completed" | "not-completed" | "favorites";
+
 const TaskFilter = ({ data }: { data: Todo[] }) => {
-    const [completed, setCompleted] = useState<boolean | null>(null)
-    // useEffect(()=>{
-    //     switch(completed){
-    //         case true:
-    //             console.log(data.filter((item)=>item?.completed === true))
-    //             break;
-    //         case false:
-    //             console.log(data.filter((item)=>item?.completed === false))
-    //             break;
-    //         default:
-    //             console.log(data)
-    //     }
-    // },[completed])
+  const [filter, setFilter] = useState<FilterType>("all");
+  const { favorites } = useTaskStore();
+
+  const visibleData = (() => {
+    switch (filter) {
+      case "completed":
+        return data.filter((item) => item.completed);
+      case "not-completed":
+        return data.filter((item) => !item.completed);
+      case "favorites":
+        return data.filter((item) => favorites.includes(item.id));
+      default:
+        return data;
+    }
+  })();
+
   return (
     <div>
-        <button className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer" onClick={()=>setCompleted(null)}>All</button>
-        <button className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer" onClick={()=>setCompleted(true)}>Completed</button>
-        <button className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer" onClick={()=>setCompleted(false)}>Not Completed</button>
-        {completed === null && data.map((item)=> <TaskItem item={item} key={item.id} /> )}
-        {completed === true && data.filter((item)=>item?.completed === true).map((item)=> <TaskItem item={item} key={item.id} /> )}
-        {completed === false && data.filter((item)=>item?.completed === false).map((item)=> <TaskItem item={item} key={item.id} /> )}
+      <button
+        className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer"
+        onClick={() => setFilter("all")}
+      >
+        All
+      </button>
+      <button
+        className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer"
+        onClick={() => setFilter("completed")}
+      >
+        Completed
+      </button>
+      <button
+        className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer"
+        onClick={() => setFilter("not-completed")}
+      >
+        Not Completed
+      </button>
+      <button
+        className="px-4 py-2 border-b-emerald-500 border-1 rounded-2xl m-2 cursor-pointer"
+        onClick={() => setFilter("favorites")}
+      >
+        Favorites
+      </button>
+
+      <div className="mt-4">
+        {visibleData.map((item) => (
+          <TaskItem item={item} key={item.id} />
+        ))}
+        {visibleData.length === 0 && <h3>No tasks found.</h3>}
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default TaskFilter
