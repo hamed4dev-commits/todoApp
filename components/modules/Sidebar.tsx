@@ -3,6 +3,7 @@ import Link from "next/link"
 const Sidebar = () => {
   return (
     <div className="h-full w-full flex flex-col gap-5">
+      <Link href={"/login"}>Login</Link>
       <Link href={"/"}  > Dashboard</Link> 
       <Link href={"/task"}  > Tasks</Link> 
       <Link href={"/users"}  > Users</Link> 
