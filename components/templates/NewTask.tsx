@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormState, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 
 // import { useState } from "react";
@@ -84,7 +84,6 @@ import * as z from "zod";
 // };
 
 // export default NewTask;
-type Inputs = z.infer<typeof schema>;
 const schema = z.object({
   title: z
     .string()
@@ -100,20 +99,51 @@ const schema = z.object({
     .refine((value) => !/\d/.test(value), {
       message: "Description must not contain numbers",
     }),
+  // store completed as boolean; react-hook-form will convert the select value to boolean
+  // completed: z.nativeEnum({ TRUE: "true", FALSE: "false" })
+  completed: z.boolean(),
 });
+
+type Inputs = z.infer<typeof schema>;
 
 const NewTask = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
-  } = useForm<Inputs>({ resolver: zodResolver(schema), mode: "onChange" });
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+    reset,
+  } = useForm<Inputs>({
+    resolver: zodResolver(schema),
+    mode: "onChange",
+    defaultValues: { title: "", description: "", completed: true },
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = async(data) => {
+    
+    try {
+      const res=  await fetch("https://jsonplaceholder.typicode.com/todos" , {
+        method: "POST",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(data)
+      })
+      
+      if( !res?.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || "Something went wrong");
+      }
+      const result = await res.json();
+      console.log("Success:", result);
+      if( res?.ok) return reset()
+      
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    
   };
   // console.log(watch("title"))
   // console.log(errors);
+  // console.log(isSubmitting);
   return (
     <div>
       <form
@@ -139,17 +169,42 @@ const NewTask = () => {
             {...register("description")}
           />
           {errors.description && (
-            <p className="text-red-600 -h-5 text-sm">{errors.description.message}</p>
+            <p className="text-red-600 -h-5 text-sm">
+              {errors?.description.message}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col gap-3 w-1/2 h-22">
+          <label htmlFor="status">Status</label>
+          <select
+            id="status"
+            // defaultChecked="true"
+            {...register("completed", {
+              setValueAs: (value) => value === "true",
+              
+            })}
+            className="border-sky-400 border rounded-2xl  placeholder-gray-400 text-white  bg-gray-700 px-3 py-0.5 ml-0.5 "
+          >
+            <option value="true">
+              completed
+            </option>
+            <option value="false">pending</option>
+          </select>
+          {errors.completed && (
+            <p className="text-red-600 -h-5 text-sm">
+              {errors?.completed?.message}
+            </p>
           )}
         </div>
         <button
           disabled={isSubmitting}
           type="submit"
-          className="w-fit py-2 px-10 bg-emerald-600 font-semiboldbold mt-3 cursor-pointer rounded-2xl"
+          className="w-fit py-2 px-10 bg-emerald-600 hover:bg-emerald-700 transition-colors font-semibold mt-3 cursor-pointer rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-600  "
         >
           {isSubmitting ? "sending..." : "send"}
         </button>
       </form>
+      
     </div>
   );
 };
