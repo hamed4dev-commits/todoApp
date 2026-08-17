@@ -15,7 +15,7 @@ const TasksPage = async () => {
     cache: "no-store",
   });
   const data: Todo[] = await res.json();
-  console.log(data)
+  // console.log(data)
 
   return (
     <div>

@@ -32,6 +32,7 @@ const TaskFilter = ({ data }: { data: Todo[] }) => {
 
   return (
     <div>
+      <div>Search comp</div>
       <button
         className="px-4 py-2 border-b-emerald-500 border rounded-2xl m-2 cursor-pointer"
         onClick={() => setFilter("all")}
