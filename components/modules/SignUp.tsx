@@ -2,6 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Bounce, toast } from "react-toastify";
 import * as z from "zod";
 
 const SignUpSchema = z
@@ -38,7 +39,7 @@ const SignUp = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset
+    reset,
   } = useForm<SignUpType>({
     resolver: zodResolver(SignUpSchema),
     mode: "onChange",
@@ -46,22 +47,43 @@ const SignUp = () => {
   });
   const onSubmit: SubmitHandler<SignUpType> = async (data) => {
     try {
-      const res=  await fetch("api/auth/signup" , {
+      const res = await fetch("api/auth/signup", {
         method: "POST",
-        headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify(data)
-      })
-      
-      if( !res?.ok) {
-        const errorData = await res.json().catch(() => ({}));
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res?.ok) {
+        console.log(res)
+        const errorData = await res.json().catch(() => ({}
+        ));
         throw new Error(errorData.message || "Something went wrong");
       }
       const result = await res.json();
-      console.log("Success:", result);
-      if( res?.ok) return reset()
-      
+      console.log("Success:",result);
+      toast(result?.message, {
+        position: "top-center",
+        autoClose: 4000,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      if (res?.ok) return reset();
     } catch (error) {
-      console.log(error)
+      console.log("error:",typeof error);
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+                                                     
+      toast(errorMessage, {
+        position: "top-center",
+        autoClose: 4000,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
   };
   return (
@@ -127,8 +149,11 @@ const SignUp = () => {
             </p>
           )}
         </div>
-        <p className="text-gray-500 text-sm" >
-        if you already have an account-<Link href={"/login"} className="text-blue-500 ">click here</Link>
+        <p className="text-gray-500 text-sm">
+          if you already have an account-
+          <Link href={"/login"} className="text-blue-500 ">
+            click here
+          </Link>
         </p>
         <p></p>
         <button

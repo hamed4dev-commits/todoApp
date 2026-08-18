@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Bounce, toast } from "react-toastify";
 import * as z from "zod";
 const SignIn = () => {
   const loginSchema = z.object({
@@ -39,13 +40,32 @@ const SignIn = () => {
 
       if (!res?.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || "Something went wrong");
+        const errorMessage = errorData.message || "Something went wrong";
+        throw new Error(errorMessage);
       }
       const result = await res.json();
       console.log("Success:", result);
+      toast(result?.message, {
+        position: "top-center",
+        autoClose: 4000,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
       if (res?.ok) return reset();
     } catch (error) {
-      console.log(error);
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+      toast(errorMessage, {
+        position: "top-center",
+        autoClose: 4000,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
   };
   return (
@@ -82,7 +102,7 @@ const SignIn = () => {
           )}
         </div>
         <p className="text-gray-500 text-sm" >
-        if you to create an account-<Link href={"/signup"} className="text-blue-500 ">click here</Link>
+        if you want to create an account-<Link href={"/signup"} className="text-blue-500 ">click here</Link>
         </p>
         <button
           disabled={isSubmitting}

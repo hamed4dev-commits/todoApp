@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/modules/Sidebar";
+import ReactToast from "@/shared/providers/ReactToast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <aside className="max-h-screen-10vh w-1/5 m-4 -my-5 mt-2.5 rounded-2xl bg-gray-600"><Sidebar/></aside>
         <main className="max-h-screen mx-2 overflow-y-scroll grow">
         
+        <ReactToast>
         {children}
+        </ReactToast>
         </main>
         
         </body>
