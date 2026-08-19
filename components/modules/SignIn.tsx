@@ -2,10 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
 import * as z from "zod";
-const SignIn = () => {
+const SignIn = async() => {
+  const [user,setUser] = useState(null)
+  console.log(user)
   const loginSchema = z.object({
     email: z
       .string()
@@ -37,7 +40,7 @@ const SignIn = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-
+      
       if (!res?.ok) {
         const errorData = await res.json().catch(() => ({}));
         const errorMessage = errorData.message || "Something went wrong";
@@ -68,6 +71,29 @@ const SignIn = () => {
       });
     }
   };
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const res = await fetch("/api/auth/me")
+        if(res.ok){
+          const data = await res.json()
+          console.log(data)
+          setUser(data.user)
+        }else {
+          setUser(null)
+        }
+      } catch (error) {
+        setUser(null)
+      }
+    }
+    checkAuth()
+  },[])
+ 
+    // const data = await res.json()
+    // setUser(data)
+  
+  
+//  console.log(getLoggedUser)
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">

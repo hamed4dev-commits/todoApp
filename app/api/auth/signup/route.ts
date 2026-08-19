@@ -18,8 +18,8 @@ const SignUpSchema = z
 
 export async function POST(req: NextRequest) {
   try {
-    const cookieStore = await cookies();
     const body = await req.json();
+    const cookieStore = await cookies();
     const validated = SignUpSchema.parse(body);
     const existingUser = users.find((user) => user.email === validated.email);
     console.log(users);

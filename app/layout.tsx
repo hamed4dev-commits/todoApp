@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/modules/Sidebar";
-import ReactToast from "@/shared/providers/ReactToast";
+
+import Wrapper from "@/shared/providers/wrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,13 +26,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex">
-        <aside className="max-h-screen-10vh w-1/5 m-4 -my-5 mt-2.5 rounded-2xl bg-gray-600"><Sidebar/></aside>
-        <main className="max-h-screen mx-2 overflow-y-scroll grow">
+      <body className="min-h-screen flex items-start max-w-7xl m-auto">
+        <aside className="sticky top-4 h-[calc(100vh-2rem)] w-1/5 m-4 self-start overflow-hidden rounded-2xl bg-gray-600">
+        <Sidebar/>
+        </aside>
+        <main className="min-w-0 mx-2 grow">
         
-        <ReactToast>
+        <Wrapper>
         {children}
-        </ReactToast>
+        </Wrapper>
         </main>
         
         </body>
