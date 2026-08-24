@@ -1,9 +1,9 @@
 import users from "@/lib/users";
-import next from "next/dist/types";
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+
+export async function GET() {
   try {
     // const body = await req.json();
     const cookieStore = await cookies();

@@ -37,12 +37,12 @@ export async function POST(req: NextRequest) {
     };
     users.push(newUser);
     console.log(users);
-    cookieStore.set("token", newUser.id, {
-      httpOnly: true,
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 2,
-    });
+    // cookieStore.set("token", newUser.id, {
+    //   httpOnly: true,
+    //   sameSite: "lax",
+    //   path: "/",
+    //   maxAge: 60 * 60 * 2,
+    // });
     return NextResponse.json(
       {
         message: "Account created successfully",

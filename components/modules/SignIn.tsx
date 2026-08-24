@@ -1,13 +1,15 @@
 "use client";
 
+import { useAuthStore } from "@/stores/authStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
 import * as z from "zod";
-const SignIn = async() => {
-  const [user,setUser] = useState(null)
+const SignIn = () => {
+  const {user,setUser,isLogged} = useAuthStore()
+  // const [user,setUser] = useState(null)
   console.log(user)
   const loginSchema = z.object({
     email: z
@@ -77,7 +79,7 @@ const SignIn = async() => {
         const res = await fetch("/api/auth/me")
         if(res.ok){
           const data = await res.json()
-          console.log(data)
+          // console.log(data)
           setUser(data.user)
         }else {
           setUser(null)

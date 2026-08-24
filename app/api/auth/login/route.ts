@@ -22,11 +22,18 @@ export async function POST(req: NextRequest) {
         { status: 401 },
       );
     }
-    console.log(cookieStore.get("token"))
-    return NextResponse.json({
+    const response = NextResponse.json({
       message: "Login successful",
       user: { name: user.name, email: user.email, id: user.id },
     });
+    response.cookies.set("token", user.id, {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 2,
+    });
+    // console.log(cookieStore.get("token"))
+    return response
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
