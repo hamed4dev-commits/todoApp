@@ -16,7 +16,7 @@ const DashboardPage = () => {
     <div>
       {/* Dash */}
 
-      <button className="cursor-pointer" onClick={logoutHandler}>
+      <button className="cursor-pointer px-4 py-2 bg-taupe-700 rounded-2xl mt-4.5 hover:opacity-75 hover:scale-105 " onClick={logoutHandler}>
         Logout
       </button>
     </div>
