@@ -1,20 +1,17 @@
-import React from 'react'
-import { ToastContainer } from 'react-toastify';
-import AuthProvider from './AuthProvider';
+import React from "react";
+import { ToastContainer } from "react-toastify";
+import AuthInitializer from "./AuthInitializer";
 
-
-
-const wrapper = ({children}: {children: React.ReactNode}) => {
+const wrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-        <AuthProvider>
+      <AuthInitializer />
 
-        {children}
-        <ToastContainer/>
-        </AuthProvider>
+      {children}
 
+      <ToastContainer />
     </>
-  )
-}
+  );
+};
 
-export default wrapper
+export default wrapper;

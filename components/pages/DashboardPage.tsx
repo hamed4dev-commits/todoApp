@@ -1,30 +1,25 @@
 // 'use server'
-"use client"
+"use client";
 import { useAuthStore } from "@/stores/authStore";
-// import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
-const DashboardPage =  () => {
-  // const cookieStore = await cookies();
-  // const token = cookieStore.get("token")?.value;
-  // console.log("token:",token);
+const DashboardPage = () => {
+  const { clearUser, user } = useAuthStore();
 
-  // async function clearCookie() {
-  //   "use server";
-  //   const cookieStore = await cookies();
-  //   cookieStore.delete("token");
-  //   redirect("/login");
-  // }
-  const {clearUser,user} = useAuthStore()
+  const router = useRouter();
+  const logoutHandler = () => {
+    clearUser();
+    router.replace("/login");
+  };
 
-  // if( !token) redirect("/login","replace")
-  console.log(user)
-  
-  return <div>
-    Dash
-    <form action={clearUser}>
-      <button className="cursor-pointer" type="submit">Logout</button>
-    </form>
-  </div>;
+  return (
+    <div>
+      {/* Dash */}
+
+      <button className="cursor-pointer" onClick={logoutHandler}>
+        Logout
+      </button>
+    </div>
+  );
 };
 export default DashboardPage;

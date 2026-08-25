@@ -7,7 +7,7 @@ interface LoggedUser {
   setUser: (user: User) => void;
   //   logout: () => Promise<void>;
   clearUser: () => void;
-  isLogged: () => Promise<void>;
+  checkAuth: () => Promise<boolean>;
 }
 
 export const useAuthStore = create<LoggedUser>((set, get) => ({
@@ -17,21 +17,24 @@ export const useAuthStore = create<LoggedUser>((set, get) => ({
   //     await fetch("/api/auth/logout" , {method: "POST"})
   //     set({user:null})
   //   },
-  clearUser: () => {
+  clearUser: async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
     set({ user: null });
   },
-  isLogged: async () => {
+  checkAuth: async () => {
     try {
       const res = await fetch("/api/auth/me");
-      if(res.ok){
-        const data = await res.json()
-        
-        set({user:data.user})
-      }else {
-        set({user: null})
+      if (res.ok) {
+        const data = await res.json();
+        set({ user: data.user });
+        return true;
+      } else {
+        set({ user: null });
+        return false;
       }
     } catch (error) {
-        set({user: null})
+      set({ user: null });
+      return false;
     }
   },
 }));

@@ -1,5 +1,5 @@
 import users from "@/lib/users";
-import { cookies } from "next/headers";
+
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 
@@ -11,7 +11,7 @@ const LoginSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const cookieStore = await cookies();
+    
     const body = await req.json();
     const validated = LoginSchema.parse(body);
     const user = users.find((u) => u.email === validated.email);
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
       path: "/",
       maxAge: 60 * 60 * 2,
     });
-    // console.log(cookieStore.get("token"))
+    
     return response
   } catch (error) {
     if (error instanceof z.ZodError) {

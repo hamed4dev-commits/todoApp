@@ -10,9 +10,7 @@ export async function GET() {
     const token = cookieStore.get("token")?.value;
     if (!token) {
       return NextResponse.json(
-        {
-          message: "Not authenticated",
-        },
+        {message: "Not authenticated"},
         { status: 401 },
       );
     }
@@ -20,7 +18,7 @@ export async function GET() {
     if (!user) {
       return NextResponse.json(
         {
-          message: "User Not Found",
+          message: "User Not Found"
         },
         { status: 401 },
       );

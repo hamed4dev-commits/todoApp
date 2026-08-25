@@ -2,13 +2,14 @@
 
 import { useAuthStore } from "@/stores/authStore";
 import { redirect } from "next/navigation";
+
 import { useEffect } from "react";
 
-const AuthProvider =  ({ children }: { children: React.ReactNode }) => {
- const {isLogged,user} = useAuthStore()
+const AuthInitializer =  () => {
+ const {checkAuth,user} = useAuthStore()
  useEffect(()=> {
-  isLogged()
- },[isLogged])
+  checkAuth()
+ },[checkAuth])
   // const cookieStore = await cookies();
   // const token = cookieStore.get("token")?.value;
 
@@ -21,7 +22,7 @@ const AuthProvider =  ({ children }: { children: React.ReactNode }) => {
   // }
   
   // console.log(getLoggedUser)
-  return <>{children}</>;
+  return null
 };
 
-export default AuthProvider;
+export default AuthInitializer;

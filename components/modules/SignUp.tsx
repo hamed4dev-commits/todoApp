@@ -1,6 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
 import * as z from "zod";
@@ -35,6 +36,7 @@ const SignUpSchema = z
   });
 type SignUpType = z.infer<typeof SignUpSchema>;
 const SignUp = () => {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -60,6 +62,7 @@ const SignUp = () => {
         throw new Error(errorData.message || "Something went wrong");
       }
       const result = await res.json();
+      router.replace("/login")
       console.log("Success:",result);
       toast(result?.message, {
         position: "top-center",
