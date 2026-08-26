@@ -1,14 +1,8 @@
 
-
+import { Todo } from "../../types/taskFilter.type";
 import TaskFilter from "../modules/TaskFilter";
-import TaskItem from "../modules/TaskItem";
-import NewTask from "../templates/NewTask";
 
-type Todo = {
-  id: number;
-  title: string;
-  completed: boolean;
-};
+
 
 const TasksPage = async () => {
   const res = await fetch("https://jsonplaceholder.typicode.com/todos/", {
@@ -20,11 +14,6 @@ const TasksPage = async () => {
   return (
     <div>
       <TaskFilter data={data} />
-      {/* {data.length > 0 &&
-        data.map((item) => (
-          <TaskItem item={item} key={item.id} />
-        
-        ))} */}
     </div>
   );
 };

@@ -1,4 +1,5 @@
-import UsersPage from "@/components/pages/UsersPage";
+import UsersPage from "@/src/features/users/page/UsersPage";
+
 
 export default function Users() {
     return (

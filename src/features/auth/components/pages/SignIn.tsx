@@ -1,30 +1,23 @@
 "use client";
 
-import { useAuthStore } from "@/stores/authStore";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
+
+import { useAuthStore } from "@/src/stores/authStore";
 import { Bounce, toast } from "react-toastify";
-import * as z from "zod";
+
+import { loginSchema, loginType } from "../../schema/Login.schema";
+
+
 const SignIn = () => {
   const {user,setUser,checkAuth} = useAuthStore()
   const router = useRouter()
   // console.log(user)
-  const loginSchema = z.object({
-    email: z
-      .string()
-      .min(2, "Email is required")
-      .trim()
-      .email("Enter valid Email"),
-    password: z
-      .string()
-      .min(1, "Password is required")
-      .trim()
-      .min(6, "Password must have 6 or more character!"),
-  });
-  type loginType = z.infer<typeof loginSchema>;
+  
+ 
   const {
     register,
     formState: { isSubmitting, errors },
@@ -76,29 +69,9 @@ const SignIn = () => {
       });
     }
   };
-  // useEffect(() => {
-  //   async function checkAuth() {
-  //     try {
-  //       const res = await fetch("/api/auth/me")
-  //       if(res.ok){
-  //         const data = await res.json()
-  //         // console.log(data)
-  //         setUser(data.user)
-  //       }else{
-  //         setUser(null)
-  //       }
-  //     } catch (error) {
-  //       setUser(null)
-  //     }
-  //   }
-  //   checkAuth()
-  // },[]) 
- 
-    // const data = await res.json()
-    // setUser(data)
+
+
   
-  
-//  console.log(getLoggedUser)
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">

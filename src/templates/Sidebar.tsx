@@ -1,5 +1,5 @@
 "use client";
-import { useAuthStore } from "@/stores/authStore";
+import { useAuthStore } from "@/src/stores/authStore";
 import Link from "next/link";
 
 const Sidebar = () => {

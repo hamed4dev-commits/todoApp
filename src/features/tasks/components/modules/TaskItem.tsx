@@ -1,12 +1,10 @@
 "use client";
-import { useTaskStore } from "@/stores/taskStores";
-import Link from "next/link";
 
-type Todo = {
-  id: number;
-  title: string;
-  completed: boolean;
-};
+import { useTaskStore } from "@/src/features/tasks/store/taskStores";
+import Link from "next/link";
+import { Todo } from "../../types/taskFilter.type";
+
+
 const TaskItem = ({ item }: { item: Todo }) => {
   const { favorites, addFavorite, removeFavorite, isFavorite } = useTaskStore();
   // console.log(favorites)

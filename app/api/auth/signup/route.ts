@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import users from "@/lib/users";
+import users from "@/src/lib/users";
 import { v6 as uuidv6 } from "uuid";
 import { cookies } from "next/headers";
 

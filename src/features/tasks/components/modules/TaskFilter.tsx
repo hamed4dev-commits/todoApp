@@ -1,17 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import TaskItem from "./TaskItem";
-import { useTaskStore } from "@/stores/taskStores";
 import Link from "next/link";
 
-type Todo = {
-  id: number;
-  title: string;
-  completed: boolean;
-};
+import { useTaskStore } from "@/src/features/tasks/store/taskStores";
+import TaskItem from "./TaskItem";
+import { FilterType, Todo } from "../../types/taskFilter.type";
 
-type FilterType = "all" | "completed" | "not-completed" | "favorites";
+
 
 const TaskFilter = ({ data }: { data: Todo[] }) => {
   const [filter, setFilter] = useState<FilterType>("all");

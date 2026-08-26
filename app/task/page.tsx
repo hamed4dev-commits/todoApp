@@ -1,4 +1,5 @@
-import TasksPage from "@/components/pages/TasksPage";
+import TasksPage from "@/src/features/tasks/components/pages/TasksPage";
+
 
 export default function Tasks() {
     return (

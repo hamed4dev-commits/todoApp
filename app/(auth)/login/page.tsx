@@ -1,7 +1,8 @@
-import LoginPage from "@/components/pages/LoginPage";
+import SignIn from "@/src/features/auth/components/pages/SignIn";
+
 
 const Login = () => {
-  return <LoginPage />;
+  return <SignIn />;
 };
 
 export default Login;

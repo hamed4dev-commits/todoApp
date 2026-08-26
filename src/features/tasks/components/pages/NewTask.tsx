@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
+import { newTaskSchema } from "../../schema/NewTask.schema";
 
 // import { useState } from "react";
 // // import { validation } from "../helpers/helper";
@@ -84,27 +85,8 @@ import * as z from "zod";
 // };
 
 // export default NewTask;
-const schema = z.object({
-  title: z
-    .string()
-    .trim()
-    .min(5, { message: "Title must be at least 5 characters long" })
-    .refine((value) => !/\d/.test(value), {
-      message: "Title must not contain numbers",
-    }),
-  description: z
-    .string()
-    .trim()
-    .min(10, { message: "Description must be at least 10 characters long" })
-    .refine((value) => !/\d/.test(value), {
-      message: "Description must not contain numbers",
-    }),
-  // store completed as boolean; react-hook-form will convert the select value to boolean
-  // completed: z.nativeEnum({ TRUE: "true", FALSE: "false" })
-  completed: z.boolean(),
-});
 
-type Inputs = z.infer<typeof schema>;
+type Inputs = z.infer<typeof newTaskSchema>;
 
 const NewTask = () => {
   const {
@@ -113,7 +95,7 @@ const NewTask = () => {
     formState: { errors, isSubmitting },
     reset,
   } = useForm<Inputs>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(newTaskSchema),
     mode: "onChange",
     defaultValues: { title: "", description: "", completed: true },
   });

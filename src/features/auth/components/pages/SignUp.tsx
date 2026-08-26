@@ -4,37 +4,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
-import * as z from "zod";
+import { SignUpSchema, SignUpType } from "../../schema/SignUp.schema";
 
-const SignUpSchema = z
-  .object({
-    name: z
-      .string()
-      .min(1, "Name is required")
-      .trim()
-      .min(3, "Name must have 3 or more character!"),
-    email: z
-      .string()
-      .min(2, "Email is required")
-      .trim()
-      .email("Enter valid Email"),
-    password: z
-      .string()
-      .min(1, "Password is required")
-      .trim()
-      .min(6, "Password must have 6 or more character!")
-      .regex(/^\S+$/, "Password cannot contain spaces"),
-    confirmPassword: z
-      .string()
-      .min(1, "Please confirm your password")
-      .trim()
-      .regex(/^\S+$/, "Password cannot contain spaces"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
-type SignUpType = z.infer<typeof SignUpSchema>;
+
 const SignUp = () => {
   const router = useRouter()
   const {
