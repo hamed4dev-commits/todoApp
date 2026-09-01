@@ -1,4 +1,4 @@
-import users from "@/src/lib/users";
+import users from "@/lib/users";
 
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";

@@ -12,7 +12,7 @@ import { FilterType, Todo } from "../../types/taskFilter.type";
 const TaskFilter = ({ data }: { data: Todo[] }) => {
   const [filter, setFilter] = useState<FilterType>("all");
   const { favorites } = useTaskStore();
-
+  // console.log(data)
   const visibleData = (() => {
     switch (filter) {
       case "completed":
@@ -58,7 +58,9 @@ const TaskFilter = ({ data }: { data: Todo[] }) => {
          <Link href={"/task/new"} className="border border-indigo-700 rounded-2xl text-indigo-300 px-3.5 py-2 ">
        New Task 
       </Link>
-        {visibleData.map((item) => (
+        {
+        visibleData &&
+        visibleData.map((item) => (
           <TaskItem item={item} key={item.id} />
         ))}
         {visibleData.length === 0 && <h3>No tasks found.</h3>}
