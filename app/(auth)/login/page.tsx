@@ -1,4 +1,4 @@
-import SignIn from "@/src/features/auth/components/pages/SignIn";
+import SignIn from "@/src/features/auth/components/pages/SignInPage";
 
 
 const Login = () => {

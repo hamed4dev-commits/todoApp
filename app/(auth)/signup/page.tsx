@@ -1,4 +1,4 @@
-import SignUp from "@/src/features/auth/components/pages/SignUp";
+import SignUp from "@/src/features/auth/components/pages/SignUpPage";
 
 
 
