@@ -2,7 +2,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useAuthStore } from "@/src/stores/authStore";
+import { useAuthStore } from "@/src/shared/stores/authStore";
 import { Ghost } from "lucide-react";
 import { useRouter } from "next/navigation";
 

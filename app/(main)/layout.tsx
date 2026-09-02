@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "../globals.css";
-import Sidebar from "@/src/templates/Sidebar";
+import Sidebar from "@/src/templates/SidebarTemplate";
 import Wrapper from "@/src/shared/providers/wrapper";
 import { cn } from "@/lib/utils";
+import SidebarWrapper from "@/src/shared/providers/SidebarWrapper";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,21 +27,28 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
+      className={cn(
+        "h-full",
+        "antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        "font-sans",
+        inter.variable,
+      )}
     >
-      <body className="min-h-screen flex items-start max-w-7xl m-auto">
-        <aside className="sticky top-4 h-[calc(100vh-2rem)] w-1/5 m-4 self-start overflow-hidden rounded-2xl bg-gray-600">
+      <body className="min-h-screen antialiased">
+        {/* <aside className="sticky top-4 h-[calc(100vh-2rem)] w-1/5 m-4 self-start overflow-hidden rounded-2xl bg-gray-600">
         <Sidebar/>
-        </aside>
-        <main className="min-w-0 mx-2 grow">
-        
+        </aside> */}
+        {/* <main className="min-w-0 mx-2 grow">
+         */}
         <Wrapper>
-        {children}
+          <SidebarWrapper >
+            {children}
+          </SidebarWrapper>
         </Wrapper>
-        </main>
-        
-        </body>
-      
+        {/* </main> */}
+      </body>
     </html>
   );
 }

@@ -1,7 +1,7 @@
 "use client"
 
 
-import { useAuthStore } from "@/src/stores/authStore";
+import { useAuthStore } from "@/src/shared/stores/authStore";
 
 
 import { useEffect } from "react";

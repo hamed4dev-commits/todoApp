@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useAuthStore } from "@/src/stores/authStore";
+import { useAuthStore } from "@/src/shared/stores/authStore";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { loginSchema, loginType } from "../../schema/Login.schema";
@@ -79,47 +79,47 @@ const SignIn = () => {
 
   return (
     <div>
-      <Card className="w-xs">
-        <CardHeader>
+      <Card className="w-xs gap-4">
+        <CardHeader className="border-b border-b-gray-300 bg-gray-200 pt-5 relative -mt-5 ">
           <CardTitle>Login To Your Account</CardTitle>
           <CardDescription>
             If You Don't Have an Account, So Create It
           </CardDescription>
           <CardAction>
-            <Button onClick={()=> router.push("/signup")}>Sign Up</Button>
+            <Button onClick={() => router.push("/signup")}>Sign Up</Button>
           </CardAction>
         </CardHeader>
-        <CardContent>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-2.5"
-          >
-            <div className="flex flex-col gap-2 h-20">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          // className="flex flex-col gap-2.5"
+        >
+          <CardContent className="flex flex-col gap-1 mb-2">
+            <div className="flex flex-col gap-1.5 h-18">
               <label htmlFor="email">Email:</label>
               <input
                 id="email"
                 type="email"
                 placeholder="Enter your E-mail"
                 {...register("email")}
-                className=" border border-purple-700 rounded-2xl py-1.5 px-3 ml-0.5"
+                className=" focus:ring-3 outline focus:ring-lime-300 focus:bg-lime-100  rounded-2xl py-1.5 px-3 ml-0.5"
               />
               {errors.email && (
-                <p className="text-red-600 text-xs relative -top-2">
+                <p className="text-red-600 text-xs relative -top-1.5">
                   {errors.email.message}
                 </p>
               )}
             </div>
-            <div className="flex flex-col gap-2 h-20">
+            <div className="flex flex-col gap-1.5 h-18">
               <label htmlFor="pass">Password:</label>
               <input
                 id="pass"
                 type="password"
                 placeholder="Enter your Password"
                 {...register("password")}
-                className=" border border-purple-700 rounded-2xl py-1.5 px-3 ml-0.5"
+                className=" focus:ring-3 outline focus:ring-lime-300 focus:bg-lime-100  rounded-2xl py-1.5 px-3 ml-0.5"
               />
               {errors.password && (
-                <p className="text-red-600 text-xs relative -top-2">
+                <p className="text-red-600 text-xs relative -top-1.5">
                   {errors.password.message}
                 </p>
               )}
@@ -130,18 +130,17 @@ const SignIn = () => {
                 click here
               </Link>
             </p> */}
-            <CardFooter>
-              <Button
-                disabled={isSubmitting}
-                type="submit"
-                className="bg-lime-500 rounded-2xl py-1 cursor-pointer focus:scale-95 hover:opacity-85"
-              >
-                {isSubmitting ? "signing in..." : "Sign In"}
-              </Button>
-            </CardFooter>
-            
-          </form>
-        </CardContent>
+          </CardContent>
+          <CardFooter className="border-t border-t-gray-300 relative py-7 -mt-6 -bottom-6 rounded-b-none w-full  bg-gray-200 ">
+            <Button
+              disabled={isSubmitting}
+              type="submit"
+              className="bg-lime-500 rounded-2xl w-full h-full py-1 cursor-pointer focus:scale-95 hover:opacity-85"
+            >
+              {isSubmitting ? "signing in..." : "Sign In"}
+            </Button>
+          </CardFooter>
+        </form>
       </Card>
     </div>
   );
