@@ -101,14 +101,15 @@ const NewTask = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async(data) => {
-    
+    const baseUrl = process.env.BASE_URL
+    console.log(baseUrl)
     try {
-      const res=  await fetch("https://jsonplaceholder.typicode.com/todos" , {
+      const res=  await fetch(`http://localhost:3001/todos` , {
         method: "POST",
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(data)
       })
-      
+      console.log(res)
       if( !res?.ok) {
         const errorData = await res.json().catch(() => ({}));
         throw new Error(errorData.message || "Something went wrong");

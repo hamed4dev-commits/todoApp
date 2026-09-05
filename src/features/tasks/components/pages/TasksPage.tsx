@@ -6,8 +6,9 @@ import TaskFilter from "../modules/TaskFilter";
 
 
 const TasksPage = async () => {
+  const baseUrl = process.env.BASE_URL
   try {
-    const res = await fetch("https://jsonplaceholder.typicode.com/todos/", {
+    const res = await fetch(`${baseUrl}/todos`, {
       cache: "no-store",
     });
     // console.log(res)
