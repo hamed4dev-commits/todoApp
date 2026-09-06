@@ -30,3 +30,4 @@ export const SignUpSchema = z
   });
   
 export type SignUpType = z.infer<typeof SignUpSchema>;
+

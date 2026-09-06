@@ -1,4 +1,12 @@
 {
+  "users": [
+    {
+      "name": "hamed",
+      "email": "ha@ha.co",
+      "password": "123456",
+      "id": "HJPqXOchG60"
+    }
+  ],
   "todos": [
     {
       "userId": 1,

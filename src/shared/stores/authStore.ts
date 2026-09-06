@@ -1,11 +1,11 @@
+import { SafeUser } from "@/src/features/auth/types/user";
 import { create } from "zustand";
 
-type User = { id: string; name: string; email: string } | null;
+type User = SafeUser | null;
 
 interface LoggedUser {
   user: User;
   setUser: (user: User) => void;
-  //   logout: () => Promise<void>;
   clearUser: () => void;
   checkAuth: () => Promise<boolean>;
 }
@@ -13,10 +13,6 @@ interface LoggedUser {
 export const useAuthStore = create<LoggedUser>((set, get) => ({
   user: null,
   setUser: (user) => set({ user }),
-  //   logout: async() => {
-  //     await fetch("/api/auth/logout" , {method: "POST"})
-  //     set({user:null})
-  //   },
   clearUser: async () => {
     await fetch("/api/auth/logout", { method: "POST" });
     set({ user: null });

@@ -1,35 +1,37 @@
-
-
-import users from "@/lib/users";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+
+import { cookies } from "next/headers";
+import { SafeUser } from "@/src/features/auth/types/user";
 
 export async function GET() {
   try {
-    // const body = await req.json();
+    
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
     if (!token) {
       return NextResponse.json(
-        {message: "Not authenticated"},
+        { message: "Not authenticated" },
         { status: 401 },
       );
     }
-    const user = users.find((u) => u.id === token);
-    if (!user) {
+    
+    const res = await fetch(`http://localhost:3001/users/${token}`);
+    if (!res.ok) {
       return NextResponse.json(
         {
-          message: "User Not Found"
+          message: "User Not Found",
         },
         { status: 401 },
       );
     }
+    const user = await res.json();
+    const safeUser: SafeUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
     return NextResponse.json({
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
+      user: safeUser
     });
   } catch (error) {
     return NextResponse.json(

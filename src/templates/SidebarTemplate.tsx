@@ -1,5 +1,6 @@
 "use client";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarBadge, AvatarFallback } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -34,10 +35,11 @@ const SidebarTemplate = () => {
     //   {/* <div className="h-full"></div> */}
     // </div>
     // className="*:to-20% *:bg-linear-to-b *:from-gray-600 *:to-gray-800 relative! left-auto! border-r "
-    <Sidebar collapsible="icon" variant="floating" side="center" className="*:to-20% *:bg-linear-to-b *:from-gray-600 *:to-gray-800 relative! left-auto! border-r ">
+    <Sidebar collapsible="icon" variant="floating" side="center" className="*:to-20% *:bg-linear-to-b *:from-gray-600 *:to-gray-800 left-auto! border-r ">
       <SidebarHeader className=" flex flex-row items-center">
         <Avatar size="lg" className="block">
           <AvatarFallback>{user?.name.slice(0,2).toUpperCase()}</AvatarFallback>
+          <AvatarBadge className="bg-lime-500" />
         </Avatar>
         <div className="flex flex-col group-data-[collapsible=icon]:hidden">
           <span className="text-sm font-medium text-lime-400">
@@ -46,12 +48,13 @@ const SidebarTemplate = () => {
         </div>
       </SidebarHeader>
       <SidebarContent>
+      <Separator />
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="gap-3">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild tooltip={item.title}>
+                  <SidebarMenuButton tooltip={item.title}>
                     <Link href={item.link} className="flex gap-2 items-center">
                       {item.icon}
                       <span>{item.title}</span>

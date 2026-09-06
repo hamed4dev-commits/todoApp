@@ -1,52 +1,55 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import users from "@/lib/users";
-import { v6 as uuidv6 } from "uuid";
-import { cookies } from "next/headers";
-
-const SignUpSchema = z
-  .object({
-    name: z.string().min(3).trim(),
-    email: z.string().min(8).email().trim().toLowerCase(),
-    password: z.string().min(6).regex(/^\S+$/),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+import z from "zod";
+import { SignUpSchema } from "@/src/features/auth/schema/SignUp.schema";
+import { SafeUser } from "@/src/features/auth/types/user";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const cookieStore = await cookies();
+    
     const validated = SignUpSchema.parse(body);
-    const existingUser = users.find((user) => user.email === validated.email);
-    console.log(users);
-    if (existingUser) {
+
+
+    const checkRes = await fetch(
+      `http://localhost:3001/users?email=${validated.email}`,
+    );
+
+    const existingUser = await checkRes.json();
+
+    if (existingUser.length > 0) {
       return NextResponse.json(
         { message: "Email already registered" },
         { status: 400 },
       );
     }
-    const newUser = {
-      name: validated.name,
-      email: validated.email,
-      password: validated.password,
-      id: uuidv6() as string,
+
+    const res = await fetch("http://localhost:3001/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: validated.name,
+        email: validated.email,
+        password: validated.password,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to create user");
+    }
+
+    const newUser = await res.json();
+    
+    const safeUser: SafeUser = {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
     };
-    users.push(newUser);
-    console.log(users);
-    // cookieStore.set("token", newUser.id, {
-    //   httpOnly: true,
-    //   sameSite: "lax",
-    //   path: "/",
-    //   maxAge: 60 * 60 * 2,
-    // });
     return NextResponse.json(
       {
         message: "Account created successfully",
-        user: { name: newUser.name, email: newUser.email, id: newUser.id },
+        user: safeUser
       },
       { status: 201 },
     );
