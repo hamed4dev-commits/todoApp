@@ -1,5 +1,7 @@
 
 import { Todo } from "../../types/taskFilter.type";
+import { basicColumns } from "../modules/task-table/columns";
+import { DataTable } from "../modules/task-table/data-table";
 import TaskFilter from "../modules/TaskFilter";
 
 
@@ -24,8 +26,9 @@ const TasksPage = async () => {
     }
 
     return (
-      <div>
+      <div className="container mx-auto py-10">
         <TaskFilter data={data} />
+        {/* <DataTable columns={basicColumns} data={data} /> */}
       </div>
     );
   } catch (error) {

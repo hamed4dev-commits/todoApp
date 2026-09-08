@@ -1,7 +1,10 @@
+import { Spinner } from "@/components/ui/spinner";
 
 const loading = () => {
   return (
-    <h2>loading ...</h2>
+    <div className="h-full grid place-content-center">
+      <Spinner />
+    </div>
   )
 }
 

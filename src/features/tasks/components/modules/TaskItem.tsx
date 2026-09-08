@@ -12,7 +12,7 @@ const TaskItem = ({ item }: { item: Todo }) => {
     <div>
         TSKItem{item?.id}:
       <Link href={`/task/${item?.id}`}>
-         {item.title}{" "}
+         {item.title}
       </Link>
       <span className={item.completed ? "text-green-500" : "text-amber-400"}>
         {item.completed ? "Completed" : "pending"}
