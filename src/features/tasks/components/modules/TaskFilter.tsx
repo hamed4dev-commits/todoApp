@@ -4,10 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { useTaskStore } from "@/src/features/tasks/store/taskStores";
-import TaskItem from "./TaskItem";
+// import TaskItem from "./TaskItem";
 import { FilterType, Todo } from "../../types/taskFilter.type";
 import { DataTable } from "./task-table/data-table";
 import { basicColumns } from "./task-table/columns";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Button } from "@/components/ui/button";
+import { Heart, ListClock, ListTodo, Plus } from "lucide-react";
 
 const TaskFilter = ({ data }: { data: Todo[] }) => {
   const [filter, setFilter] = useState<FilterType>("all");
@@ -29,7 +32,7 @@ const TaskFilter = ({ data }: { data: Todo[] }) => {
   return (
     <div>
       <div>Search comp</div>
-      <button
+      {/* <button
         className="px-4 py-2 border-b-emerald-500 border rounded-2xl m-2 cursor-pointer"
         onClick={() => setFilter("all")}
       >
@@ -52,20 +55,50 @@ const TaskFilter = ({ data }: { data: Todo[] }) => {
         onClick={() => setFilter("favorites")}
       >
         Favorites
-      </button>
+      </button> */}
+      <div className="flex gap-6">
+        {/* buttons */}
+        <ButtonGroup className="grow">
+          <Button  onClick={() => setFilter("all")}>All</Button>
+          <Button  onClick={() => setFilter("completed")}>
+            <ListTodo />
+            <span>Completed</span>
+          </Button>
+          <Button  onClick={() => setFilter("not-completed")}>
+            <ListClock />
+            <span>Pending</span>
+          </Button>
+          <Button  onClick={() => setFilter("favorites")}>
+            <Heart />
+            <span>Favorites</span>
+          </Button>
+        </ButtonGroup>
+        <ButtonGroup >
 
-      <div className="my-4">
+        <Link
+          href={"/task/new"}
+        >
+        <Button>
+          <Plus />
+          Create Task
+        </Button>
+        </Link>
+        </ButtonGroup>
+      </div>
+      {/* <div className="my-4">
         <Link
           href={"/task/new"}
           className="border border-indigo-700 rounded-2xl text-indigo-300 px-3.5 py-2 "
         >
           New Task
         </Link>
-        {/* {visibleData &&
+        {visibleData &&
           visibleData.map((item) => <TaskItem item={item} key={item.id} />)}
-        {visibleData.length === 0 && <h3>No tasks found.</h3>} */}
-      </div>
+        {visibleData.length === 0 && <h3>No tasks found.</h3>}
+      </div> */}
+      <div>
         <DataTable columns={basicColumns} data={visibleData} />
+      </div>
     </div>
   );
 };

@@ -38,7 +38,7 @@ export function DataTable<Todo extends RowData>({
   });
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div className="overflow-hidden rounded-md border border-gray-500">
       <Table>
         <TableHeader>
           {/* {table?.getHeaderGroups.map((headerGroup)=> (console.log(headerGroup))} */}
@@ -46,7 +46,7 @@ export function DataTable<Todo extends RowData>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="border-r border-r-gray-500 last:border-none">
                     {header.isPlaceholder ? null : (
                       <table.FlexRender header={header} />
                     )}
@@ -62,6 +62,7 @@ export function DataTable<Todo extends RowData>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                className="odd:bg-gray-800 border-b-gray-500"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
