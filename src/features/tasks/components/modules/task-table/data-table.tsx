@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { basicColumns } from "./columns";
+
 import { Todo } from "../../../types/taskFilter.type";
 import { Button } from "@/components/ui/button";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
@@ -66,7 +66,6 @@ export function DataTable<Todo extends RowData>({
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     <table.FlexRender cell={cell} />
-                    
                   </TableCell>
                 ))}
               </TableRow>
@@ -84,30 +83,35 @@ export function DataTable<Todo extends RowData>({
       <div className="text-center">
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
-              <Button
-                variant={"secondary"}
-                size={"sm"}
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-              >
-                <ArrowBigLeft />
-              </Button>
+            <TooltipTrigger
+              render={
+                <Button
+                  variant={"secondary"}
+                  size={"sm"}
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                />
+              }
+            >
+              <ArrowBigLeft />
             </TooltipTrigger>
             <TooltipContent side="left">
               <p>back</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger>
-              <Button
-                variant={"secondary"}
-                size={"sm"}
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-              >
-                <ArrowBigRight />
-              </Button>
+            <TooltipTrigger
+              render={
+                <Button
+                  variant={"secondary"}
+                  size={"sm"}
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                />
+              }
+            >
+              <ArrowBigRight />
+              {/* </Button> */}
             </TooltipTrigger>
             <TooltipContent side="right">
               <p>next</p>
