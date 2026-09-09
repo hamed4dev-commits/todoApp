@@ -56,7 +56,7 @@ const TaskFilter = ({ data }: { data: Todo[] }) => {
       >
         Favorites
       </button> */}
-      <div className="flex gap-6">
+      <div className="flex gap-6 my-4">
         {/* buttons */}
         <ButtonGroup className="grow">
           <Button  onClick={() => setFilter("all")}>All</Button>

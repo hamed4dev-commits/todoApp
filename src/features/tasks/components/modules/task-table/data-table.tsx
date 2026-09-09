@@ -21,6 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { getPageNumbers } from "../../helpers/helper";
 
 interface DataTableProps<Todo extends RowData> {
   columns: ColumnDef<DataTableFeatures, Todo>[];
@@ -31,11 +32,20 @@ export function DataTable<Todo extends RowData>({
   columns,
   data,
 }: DataTableProps<Todo>) {
-  const table = useTable({
-    features,
-    data,
-    columns,
-  });
+  const table = useTable(
+    {
+      features,
+      data,
+      columns,
+    },
+    (state) => ({
+      pagination: state.pagination,
+    }),
+  );
+  const currentPage = table.state.pagination.pageIndex + 1;
+  const pageCount = table.getPageCount();
+  const pages = getPageNumbers(currentPage, pageCount, 2);
+  // console.log(currentPage, pageCount);
 
   return (
     <div className="overflow-hidden rounded-md border border-gray-500">
@@ -46,7 +56,10 @@ export function DataTable<Todo extends RowData>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className="border-r border-r-gray-500 last:border-none">
+                  <TableHead
+                    key={header.id}
+                    className="border-r border-r-gray-500 last:border-none"
+                  >
                     {header.isPlaceholder ? null : (
                       <table.FlexRender header={header} />
                     )}
@@ -83,6 +96,10 @@ export function DataTable<Todo extends RowData>({
       <Separator />
       <div className="text-center">
         <TooltipProvider>
+          <span className="text-sm text-muted-foreground px-2">
+              Page {currentPage} of {pageCount}
+            </span>
+          <div>
           <Tooltip>
             <TooltipTrigger
               render={
@@ -100,6 +117,26 @@ export function DataTable<Todo extends RowData>({
               <p>back</p>
             </TooltipContent>
           </Tooltip>
+            
+            {pages.map((page, i) =>
+              page === "..." ? (
+                <span
+                  key={`ellipsis-${i}`}
+                  className="px-2 text-muted-foreground"
+                >
+                  …
+                </span>
+              ) : (
+                <Button
+                  key={page}
+                  variant={page === currentPage ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => table.setPageIndex(page - 1)} // TanStack is 0-based
+                >
+                  {page}
+                </Button>
+              ),
+            )}
           <Tooltip>
             <TooltipTrigger
               render={
@@ -118,6 +155,8 @@ export function DataTable<Todo extends RowData>({
               <p>next</p>
             </TooltipContent>
           </Tooltip>
+          </div>
+          
         </TooltipProvider>
       </div>
     </div>
