@@ -22,6 +22,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { getPageNumbers } from "../../helpers/helper";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 interface DataTableProps<Todo extends RowData> {
   columns: ColumnDef<DataTableFeatures, Todo>[];
@@ -94,71 +103,115 @@ export function DataTable<Todo extends RowData>({
         </TableBody>
       </Table>
       <Separator />
-      <div className="text-center">
-        <TooltipProvider>
+      <div className="text-center mt-2">
+        <TooltipProvider >
           <span className="text-sm text-muted-foreground px-2">
-              Page {currentPage} of {pageCount}
-            </span>
-          <div>
-          <Tooltip>
-            <TooltipTrigger
-              render={
-                <Button
-                  variant={"secondary"}
-                  size={"sm"}
-                  onClick={() => table.previousPage()}
-                  disabled={!table.getCanPreviousPage()}
-                />
-              }
-            >
-              <ArrowBigLeft />
-            </TooltipTrigger>
-            <TooltipContent side="left">
-              <p>back</p>
-            </TooltipContent>
-          </Tooltip>
-            
-            {pages.map((page, i) =>
-              page === "..." ? (
-                <span
-                  key={`ellipsis-${i}`}
-                  className="px-2 text-muted-foreground"
-                >
-                  …
-                </span>
-              ) : (
-                <Button
-                  key={page}
-                  variant={page === currentPage ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => table.setPageIndex(page - 1)} // TanStack is 0-based
-                >
-                  {page}
-                </Button>
-              ),
-            )}
-          <Tooltip>
-            <TooltipTrigger
-              render={
-                <Button
-                  variant={"secondary"}
-                  size={"sm"}
-                  onClick={() => table.nextPage()}
-                  disabled={!table.getCanNextPage()}
-                />
-              }
-            >
-              <ArrowBigRight />
-              {/* </Button> */}
-            </TooltipTrigger>
-            <TooltipContent side="right">
-              <p>next</p>
-            </TooltipContent>
-          </Tooltip>
+            Page {currentPage} of {pageCount}
+          </span>
+          <div className="flex justify-center items-center mb-2">
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    variant={"secondary"}
+                    size={"sm"}
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
+                  />
+                }
+              >
+                <ArrowBigLeft />
+              </TooltipTrigger>
+              <TooltipContent side="left">
+                <p>back</p>
+              </TooltipContent>
+            </Tooltip>
+            <div>
+              {pages.map((page, i) =>
+                page === "..." ? (
+                  <span
+                    key={`ellipsis-${i}`}
+                    className="px-2 text-muted-foreground text-xl leading-none "
+                  >   
+                    …
+                  </span>
+                ) : (
+                  <Button
+                    key={page}
+                    variant={page === currentPage ? "secondary" : "outline"}
+                    size="sm"
+                    className="transition-all ease-in delay-200 duration-200"
+                    onClick={() => table.setPageIndex(page - 1)} // TanStack is 0-based
+                  >
+                    {page}
+                  </Button>
+                ),
+              )}
+            </div>
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    variant={"secondary"}
+                    size={"sm"}
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}
+                  />
+                }
+              >
+                <ArrowBigRight />
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>next</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
-          
         </TooltipProvider>
       </div>
+      {/* <div>
+        <Pagination>
+          <PaginationContent >
+            <PaginationItem className="transition-all ease-in-out delay-150 duration-300">
+              <PaginationPrevious
+                onClick={() => table.previousPage()}
+                className={
+                  !table.getCanPreviousPage()
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
+              ></PaginationPrevious>
+            </PaginationItem>
+            {pages.map((page, i) =>
+              page === "..." ? (
+                <PaginationItem key={`ellipsis-${i}`}>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              ) : (
+                <PaginationItem key={page}>
+                  <PaginationLink
+                    isActive={page === currentPage}
+                    onClick={() => table.setPageIndex(page - 1)}
+                    className="transition-all ease-in delay-150 duration-300"
+                    // className="cursor-pointer"
+                  >
+                    {page}
+                  </PaginationLink>
+                </PaginationItem>
+              ),
+            )}
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => table.nextPage()}
+                className={
+                  !table.getCanNextPage()
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div> */}
     </div>
   );
 }

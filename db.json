@@ -5,6 +5,12 @@
       "email": "ha@ha.co",
       "password": "123456",
       "id": "HJPqXOchG60"
+    },
+    {
+      "name": "folani",
+      "email": "fo@fo.co",
+      "password": "123456",
+      "id": "gGwmdaKxtDY"
     }
   ],
   "todos": [
@@ -1218,6 +1224,31 @@
       "description": "watering plants",
       "completed": false,
       "id": "W36pZpiJTfU"
+    },
+    {
+      "title": "have to run three km tommorow",
+      "completed": false,
+      "id": "k1UtBBeF6yA"
+    },
+    {
+      "title": "wash the car immediately",
+      "completed": false,
+      "id": "BSjw93RWThc"
+    },
+    {
+      "title": "debug the todo app",
+      "completed": true,
+      "id": "ALzjwpIaNOY"
+    },
+    {
+      "title": "I assume it worked",
+      "completed": true,
+      "id": "8Sb1RDpk1s0"
+    },
+    {
+      "title": "jhsbskj",
+      "completed": false,
+      "id": "FEaORCk-jqU"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
