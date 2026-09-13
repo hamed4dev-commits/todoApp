@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { newTaskSchema } from "../../schema/NewTask.schema";
 import {
@@ -14,6 +14,15 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Bounce, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // import { useState } from "react";
 // // import { validation } from "../helpers/helper";
@@ -96,19 +105,26 @@ import { useRouter } from "next/navigation";
 
 // export default NewTask;
 
-type Inputs = z.infer<typeof newTaskSchema>;
+type Inputs = z.input<typeof newTaskSchema>;
 
 const NewTask = () => {
-  const router = useRouter()
+  const router = useRouter();
+  const options = [
+    // { label: "select status", value: null },
+    { label: "Completed", value: "completed" },
+    { label: "Pending", value: "pending" },
+  ];
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
     reset,
+    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(newTaskSchema),
     mode: "onChange",
-    defaultValues: { title: "", completed: true },
+    defaultValues: { title: "", completed: null },
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -127,7 +143,7 @@ const NewTask = () => {
       }
       const result = await res.json();
       console.log("Success:", result);
-      toast("Todo created successfully",{
+      toast("Todo created successfully", {
         position: "top-center",
         autoClose: 4000,
         pauseOnHover: true,
@@ -135,14 +151,14 @@ const NewTask = () => {
         progress: undefined,
         theme: "light",
         transition: Bounce,
-      })
-      router.push("/task")
+      });
+      router.push("/task");
       if (res?.ok) return reset();
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  // console.log(watch("title"))
+  console.log(watch("completed"));
   // console.log(errors);
   // console.log(isSubmitting);
   return (
@@ -187,7 +203,52 @@ const NewTask = () => {
                 </p>
               )}
             </div> */}
-            <div className="flex flex-col gap-3  h-22">
+            <div>
+              <Controller
+                name="completed"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    value={
+                      field.value === null || field.value === undefined
+                        ? ""
+                        : field.value
+                          ? "completed"
+                          : "pending"
+                    }
+                    onValueChange={(val) => {
+                      if (val === "Completed") {
+                        field.onChange(true);
+                      } else if (val === "Pending") {
+                        field.onChange(false);
+                      } else {
+                        field.onChange(null);
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="w-full max-w-35 focus:bg-emerald-200 focus:ring-2 focus:ring-emerald-500">
+                      <SelectValue placeholder="select status" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-emerald-300">
+                      <SelectGroup>
+                        <SelectLabel>status</SelectLabel>
+                        {options.map((i) => (
+                          <SelectItem key={i.value} value={i.value}>
+                            {i.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.completed && (
+                <p className="text-red-600 -h-5 text-sm">
+                  {errors?.completed?.message}
+                </p>
+              )}
+            </div>
+            {/* <div className="flex flex-col gap-3  h-22">
               <label htmlFor="status" className="text-gray-200">
                 Status
               </label>
@@ -214,7 +275,7 @@ const NewTask = () => {
                   {errors?.completed?.message}
                 </p>
               )}
-            </div>
+            </div> */}
             <button
               disabled={isSubmitting}
               type="submit"

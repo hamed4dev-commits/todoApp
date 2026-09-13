@@ -17,5 +17,10 @@ export const newTaskSchema = z.object({
   //   }),
   // store completed as boolean; react-hook-form will convert the select value to boolean
   // completed: z.nativeEnum({ TRUE: "true", FALSE: "false" })
-  completed: z.boolean({message: "Choose the status of your Todo"}),
+  completed: z
+    .boolean()
+    .nullable()
+    .refine((val) => val !== null, {
+      message: "Choose the status of your Todo",
+    }),
 });

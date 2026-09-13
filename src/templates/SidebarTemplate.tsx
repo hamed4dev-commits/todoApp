@@ -35,7 +35,7 @@ const SidebarTemplate = () => {
     //   {/* <div className="h-full"></div> */}
     // </div>
     // className="*:to-20% *:bg-linear-to-b *:from-gray-600 *:to-gray-800 relative! left-auto! border-r "
-    <Sidebar collapsible="icon" variant="floating" side="center" className="*:to-20% *:bg-linear-to-b *:from-gray-600 *:to-gray-800 left-auto! border-r ">
+    <Sidebar collapsible="icon" variant="floating" side="center" className="*:to-20% *:bg-linear-to-b *:from-gray-600 *:to-gray-800 left-auto! max-h-250 border-r ">
       <SidebarHeader className=" flex flex-row items-center">
         <Avatar size="lg" className="block">
           <AvatarFallback>{user?.name.slice(0,2).toUpperCase()}</AvatarFallback>
