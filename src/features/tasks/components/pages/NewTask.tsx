@@ -209,6 +209,7 @@ const NewTask = () => {
                 control={control}
                 render={({ field }) => (
                   <Select
+                    items={options}
                     value={
                       field.value === null || field.value === undefined
                         ? ""
@@ -217,9 +218,9 @@ const NewTask = () => {
                           : "pending"
                     }
                     onValueChange={(val) => {
-                      if (val === "Completed") {
+                      if (val === "completed") {
                         field.onChange(true);
-                      } else if (val === "Pending") {
+                      } else if (val === "pending") {
                         field.onChange(false);
                       } else {
                         field.onChange(null);

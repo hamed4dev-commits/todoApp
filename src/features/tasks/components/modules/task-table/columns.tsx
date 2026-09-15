@@ -25,7 +25,7 @@ export const basicColumns = columnHelper.columns([
       ) : (
         <Badge variant={"default"} className="font-medium text-rose-600">
           <Loader className="stroke-amber-400 " />
-          Pending
+          pending
         </Badge>
       );
     },

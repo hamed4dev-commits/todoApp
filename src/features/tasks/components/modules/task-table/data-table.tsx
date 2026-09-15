@@ -60,7 +60,7 @@ export function DataTable<Todo extends RowData>({
     <div className="overflow-hidden rounded-md border border-gray-500">
       <Table>
         <TableHeader>
-          {/* {table?.getHeaderGroups.map((headerGroup)=> (console.log(headerGroup))} */}
+          
           {table?.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {

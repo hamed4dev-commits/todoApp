@@ -2,10 +2,10 @@
 
 import { Loader2, Star } from "lucide-react";
 import { useTaskStore } from "../../../store/taskStores";
-import { useEffect, useState } from "react";
+
 
 function FavoriteButton({row}:any) {
-  //  const[hydrated,setHydrated] = useState(false)
+ 
   const { favorites,hasHydrated, addFavorite, removeFavorite } = useTaskStore();
 
   const id = row?.original.id;
@@ -17,9 +17,7 @@ function FavoriteButton({row}:any) {
       addFavorite(id);
     }
   };
-  // useEffect(()=>{
-  //   setHydrated(true)
-  // },[])
+  
   if(!hasHydrated) {
     return (
       <Loader2 className="h-4 w-4 animate-spin"/>

@@ -1,4 +1,4 @@
-import UsersPage from "@/src/features/users/page/UsersPage";
+import UsersPage from "@/src/features/users/components/page/UsersPage";
 import { Metadata } from "next";
 
 export const metadata:Metadata = {
